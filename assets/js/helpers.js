@@ -8,6 +8,11 @@ function isMoveValid(state, coorFrom, coorTo) {
         SELECTED_CELLID, SELECTED_VALIDMOVES } = state;
     const [rowFrom, colFrom] = coorFrom.split('_')
     const [rowTo, colTo] = coorTo.split('_')
+    const cell = document.querySelector(`[data-coor='${coorTo}']`)
+    const owner = cell.getAttribute('player');
+
+    if (owner && owner == SELECTED_PLAYER)
+        return false
 
     switch (SELECTED_PIECE) {
 
@@ -44,13 +49,16 @@ function isMoveValid(state, coorFrom, coorTo) {
 
         // KNIGHT check if the move is valid
         case 'KN':
-            const cell = document.querySelector(`[data-coor='${coorTo}']`)
-            const owner = cell.getAttribute('player');
-
-            if (owner && owner == SELECTED_PLAYER)
-                return false
 
             return SELECTED_VALIDMOVES.some(coor => coorTo == coor);
+
+
+
+        // BISHOP check if the move is valid
+        case 'BI':
+
+            return SELECTED_VALIDMOVES.some(coor => coorTo == coor);
+
     }
 
 
@@ -75,7 +83,8 @@ function isMoveValid(state, coorFrom, coorTo) {
 function generateValidMoves(state) {
     const { MOVEMENTS, SELECTED_PIECE, SELECTED_PLAYER, SELECTED_CELLID, SELECTED_COOR } = state;
     const [rowFrom, colFrom] = SELECTED_COOR.split('_')
-    const numForward = MOVEMENTS[SELECTED_CELLID] >= 1 ? 1 : 2
+    const row = parseInt(rowFrom);
+    const col = parseInt(colFrom);
     const validMoves = new Array();
 
     switch (SELECTED_PIECE) {
@@ -83,6 +92,10 @@ function generateValidMoves(state) {
 
         // PAWN generate valid moves
         case 'PA':
+            const numForward = MOVEMENTS[SELECTED_CELLID] >= 1
+                ? 1
+                : 2
+
             switch (true) {
                 case SELECTED_PLAYER == 'BLK':
                     for (let i = 1; i <= numForward; i++) {
@@ -125,29 +138,29 @@ function generateValidMoves(state) {
         case 'KN':
 
             // 2 cells away all directions
-            const up = parseInt(rowFrom) - 2
-            const down = parseInt(rowFrom) + 2
-            const left = parseInt(colFrom) - 2
-            const right = parseInt(colFrom) + 2
+            const up = row - 2
+            const down = row + 2
+            const left = col - 2
+            const right = col + 2
 
             // left/right of that direction (up/down = row, left/right = col)
             if (up && up > 0) {
-                const onItsRight = parseInt(colFrom) + 1;
-                const onItsLeft = parseInt(colFrom) - 1;
+                const onItsRight = col + 1;
+                const onItsLeft = col - 1;
                 onItsRight > 0 ? validMoves.push(`${up}_${onItsRight}`) : null;
                 onItsLeft > 0 ? validMoves.push(`${up}_${onItsLeft}`) : null;
             }
 
             if (down && down > 0 && down <= 8) {
-                const onItsRight = parseInt(colFrom) + 1;
-                const onItsLeft = parseInt(colFrom) - 1;
+                const onItsRight = col + 1;
+                const onItsLeft = col - 1;
                 onItsRight > 0 ? validMoves.push(`${down}_${onItsRight}`) : null;
                 onItsLeft > 0 ? validMoves.push(`${down}_${onItsLeft}`) : null;
             }
 
             if (left && left > 0) {
-                const onItsTop = parseInt(rowFrom) - 1;
-                const onItsBottom = parseInt(rowFrom) + 1;
+                const onItsTop = row - 1;
+                const onItsBottom = row + 1;
                 onItsTop > 0 ? validMoves.push(`${onItsTop}_${left}`) : null;
                 onItsBottom > 0 && onItsBottom <= 8
                     ? validMoves.push(`${onItsBottom}_${left}`)
@@ -155,12 +168,50 @@ function generateValidMoves(state) {
             }
 
             if (right && right > 0 && right <= 8) {
-                const onItsTop = parseInt(rowFrom) - 1;
-                const onItsBottom = parseInt(rowFrom) + 1;
+                const onItsTop = row - 1;
+                const onItsBottom = row + 1;
                 onItsTop > 0 ? validMoves.push(`${onItsTop}_${right}`) : null;
                 onItsBottom > 0 && onItsBottom <= 8
                     ? validMoves.push(`${onItsBottom}_${right}`)
                     : null;
+            }
+
+            break;
+
+
+        // BISHIP generate valid moves
+        case 'BI':
+
+            // toTopLeft line
+            for (let i = col - 1; i != 0; i--) {
+                const newRow = row - (col - i);
+
+                if (newRow > 1)
+                    validMoves.push(`${newRow}_${i}`)
+            }
+
+            // toTopRight line
+            for (let j = col + 1; j != 9; j++) {
+                const newRow = row + (col - j);
+
+                if (newRow > 1)
+                    validMoves.push(`${newRow}_${j}`)
+            }
+
+            // toBottomLeft
+            for (let k = col - 1; k != 0; k--) {
+                const newRow = row + (col - k);
+
+                if (newRow <= 8)
+                    validMoves.push(`${newRow}_${k}`)
+            }
+
+            // toBottomRight
+            for (let l = col + 1; l != 9; l++) {
+                const newRow = row + (l - col);
+
+                if (newRow <= 8)
+                    validMoves.push(`${newRow}_${l}`)
             }
 
             break;

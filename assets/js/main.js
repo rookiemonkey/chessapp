@@ -74,6 +74,7 @@ const ChessApp = function () {
                             state.SELECTED_PIECE = el.getAttribute('piece');
                             state.SELECTED_VALIDMOVES = generateValidMoves(state);
 
+                            console.log(state)
                             showValidMoves(state, 'ACTIVATE')
                             return null;
                         }
@@ -104,7 +105,6 @@ const ChessApp = function () {
             if (!state.SELECTED_COOR && !state.SELECTED_CELLID)
                 return alert("NOTHING TO MOVE");
 
-            this.incrementMove(state.SELECTED_CELLID)
             const { BOARD, SELECTED_PIECE, SELECTED_PLAYER, SELECTED_CELLID } = state;
             const from = document.querySelector(`[data-coor='${coorFrom}']`);
             const to = document.querySelector(`[data-coor='${coorTo}']`);
@@ -131,7 +131,8 @@ const ChessApp = function () {
             from.removeAttribute('id');
             from.textContent = '';
 
-            // update the state board
+            // update the state board and increment move number
+            this.incrementMove(state.SELECTED_CELLID)
             BOARD[`ROW${rowFrom}`][colFrom - 1] = null;
             BOARD[`ROW${rowTo}`][colTo - 1] = `${SELECTED_PIECE}-${SELECTED_PLAYER}`;
 
