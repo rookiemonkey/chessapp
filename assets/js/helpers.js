@@ -18,14 +18,14 @@ function isMoveValid(state, coorFrom, coorTo) {
 
             switch (true) {
 
-                case SELECTED_PLAYER == 'P1':
+                case SELECTED_PLAYER == 'BLK':
                     return rowTo > rowFrom
                         && rowTo - rowFrom <= numForward
                         && colTo == colFrom
                         ? isValidMove = true
                         : isValidMove = false;
 
-                case SELECTED_PLAYER == 'P2':
+                case SELECTED_PLAYER == 'WHI':
                     return rowTo < rowFrom
                         && rowFrom - rowTo <= numForward
                         && colTo == colFrom
@@ -84,12 +84,12 @@ function generateValidMoves(state) {
         // PAWN generate valid moves
         case 'PA':
             switch (true) {
-                case SELECTED_PLAYER == 'P1':
+                case SELECTED_PLAYER == 'BLK':
                     for (let i = 1; i <= numForward; i++) {
                         validMoves.push(`${parseInt(rowFrom) + i}_${colFrom}`)
                     }
                     break;
-                case SELECTED_PLAYER == 'P2':
+                case SELECTED_PLAYER == 'WHI':
                     for (let i = 1; i <= numForward; i++) {
                         validMoves.push(`${parseInt(rowFrom) - i}_${colFrom}`)
                     }

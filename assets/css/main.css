@@ -1,8 +1,10 @@
 :root {
     --board_w: 560px; /* PRODUCT OF 8 * board_h */
     --board_h: 70px;
-    --p1: blue;
-    --p2: red;
+    --board_dark: #d18b47;
+    --board_white: #FFCE9E;
+    --piece_BLK: black;
+    --piece_WHI: white;
 }
 
 * {
@@ -32,18 +34,19 @@ div.col {
     align-items: center;
     font-size: large;
     font-weight: 800;
+    background-color: var(--board_white);
 }
 
 div.col.dark {
-    background-color: gray;
+    background-color: var(--board_dark);
 }
 
-div.P1 {
-    color: var(--p1);
+div.BLK {
+    color: var(--piece_BLK);
 }
 
-div.P2 {
-    color: var(--p2);
+div.WHI {
+    color: var(--piece_WHI);
 }
 
 div.selected {
