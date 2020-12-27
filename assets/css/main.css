@@ -1,0 +1,55 @@
+:root {
+    --board_w: 560px; /* PRODUCT OF 8 * board_h */
+    --board_h: 70px;
+    --p1: blue;
+    --p2: red;
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+main {
+    border: 1px solid black;
+    margin: 0px auto;
+    width: var(--board_w);
+    height: var(--board_w);
+}
+
+div.row {
+    display: flex;
+    width: var(--board_w);
+    height: var(--board_h);
+}
+
+div.col {
+    display: flex;
+    width: var(--board_h);
+    height: var(--board_h);
+    justify-content: center;
+    align-items: center;
+    font-size: large;
+    font-weight: 800;
+}
+
+div.col.dark {
+    background-color: gray;
+}
+
+div.P1 {
+    color: var(--p1);
+}
+
+div.P2 {
+    color: var(--p2);
+}
+
+div.selected {
+    border: 5px solid yellowgreen;
+}
+
+div.validmove {
+    background-color: plum !important;
+}
