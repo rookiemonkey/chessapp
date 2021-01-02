@@ -1,7 +1,7 @@
 import HTMLChessPieceCell from './components/Cell';
 import HTMLChessPieceCellEmpty from './components/CellEmpty';
 import getValidMoves from './moves/_toGetValidMoves';
-import isMoveValid from './moves/_isMoveValid';
+import isMoveValid from './utilities/isMoveValid';
 import showValidMoves from './utilities/toShowValidMoves';
 
 const ChessApp = function () {
