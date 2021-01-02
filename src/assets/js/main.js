@@ -1,3 +1,9 @@
+import HTMLChessPieceCell from './components/Cell';
+import HTMLChessPieceCellEmpty from './components/CellEmpty';
+import getValidMoves from './moves/_toGetValidMoves';
+import isMoveValid from './moves/_isMoveValid';
+import showValidMoves from './utilities/toShowValidMoves';
+
 const ChessApp = function () {
 
     // GAME PRIVATE STATE
@@ -72,9 +78,8 @@ const ChessApp = function () {
                             state.SELECTED_CELLID = el.getAttribute('id');
                             state.SELECTED_PLAYER = el.getAttribute('player');
                             state.SELECTED_PIECE = el.getAttribute('piece');
-                            state.SELECTED_VALIDMOVES = generateValidMoves(state);
+                            state.SELECTED_VALIDMOVES = getValidMoves(state);
 
-                            console.log(state)
                             showValidMoves(state, 'ACTIVATE')
                             return null;
                         }
@@ -152,5 +157,6 @@ const ChessApp = function () {
     }
 
 }();
+
 
 ChessApp.start();
