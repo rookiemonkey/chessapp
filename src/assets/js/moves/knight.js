@@ -1,4 +1,3 @@
-
 export default function move_knight(props) {
     const { rowFrom, colFrom } = props;
     const validMoves = new Array();

@@ -22,7 +22,7 @@ export default function move_rook(props) {
             if (cell.id && cellPlayer == currentPlayer)
                 break;
 
-            // continue once a chess piece is present, doesn't belong to player
+            // stop once a chess piece is present, doesn't belong to player
             if (cell.id && cellPlayer != currentPlayer) {
                 validMoves.push(cell.getAttribute('data-coor'))
                 break;
@@ -43,7 +43,7 @@ export default function move_rook(props) {
             if (cell.id && cellPlayer == currentPlayer)
                 break;
 
-            // continue once a chess piece is present, doesn't belong to player
+            // stop once a chess piece is present, doesn't belong to player
             if (cell.id && cellPlayer != currentPlayer) {
                 validMoves.push(cell.getAttribute('data-coor'))
                 break;
@@ -64,7 +64,7 @@ export default function move_rook(props) {
             if (cell.id && cellPlayer == currentPlayer)
                 break;
 
-            // continue once a chess piece is present, doesn't belong to player
+            // stop once a chess piece is present, doesn't belong to player
             if (cell.id && cellPlayer != currentPlayer) {
                 validMoves.push(cell.getAttribute('data-coor'))
                 break;
@@ -85,7 +85,7 @@ export default function move_rook(props) {
             if (cell.id && cellPlayer == currentPlayer)
                 break;
 
-            // continue once a chess piece is present, doesn't belong to player
+            // stop once a chess piece is present, doesn't belong to player
             if (cell.id && cellPlayer != currentPlayer) {
                 validMoves.push(cell.getAttribute('data-coor'))
                 break;
