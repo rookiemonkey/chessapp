@@ -3,6 +3,7 @@ import move_rook from './rook';
 import move_knight from './knight';
 import move_bishop from './bishop';
 import move_king from './king';
+import move_queen from './queen';
 
 export default function getValidMoves(state) {
     const { SELECTED_PIECE, SELECTED_COOR, MOVEMENTS,
@@ -42,6 +43,12 @@ export default function getValidMoves(state) {
         // KING generate valid moves
         case 'KI':
             validMoves.push(...move_king({ rowFrom, colFrom }))
+            break;
+
+
+        // QUEEN generate velid moves
+        case "QU":
+            validMoves.push(...move_queen({ rowFrom, colFrom }))
             break;
     }
 

@@ -60,6 +60,12 @@ export default function isMoveValid(state, coorFrom, coorTo) {
         // KING check if the move is valid
         case 'KI':
             return SELECTED_VALIDMOVES.some(validCoor => coorTo == validCoor)
+
+
+
+        // QUEEN check if the move is valid
+        case 'QU':
+            return SELECTED_VALIDMOVES.some(validCoor => coorTo == validCoor)
     }
 
 }
