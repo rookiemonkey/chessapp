@@ -119,7 +119,7 @@ const ChessApp = function () {
             const to = document.querySelector(`[data-coor='${coorTo}']`);
             const [rowFrom, colFrom] = coorFrom.split('_')
             const [rowTo, colTo] = coorTo.split('_')
-            const isValidMove = isMoveValid(state, coorFrom, coorTo);
+            const isValidMove = isMoveValid(state, coorTo);
 
             // halt the function if move is invalid
             if (!isValidMove)
