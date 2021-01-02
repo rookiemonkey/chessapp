@@ -9,7 +9,7 @@ export default function move_bishop(props) {
     for (let i = col - 1; i != 0; i--) {
         const newRow = row - (col - i);
 
-        if (newRow > 1)
+        if (newRow >= 1)
             validMoves.push(`${newRow}_${i}`)
     }
 
@@ -17,7 +17,7 @@ export default function move_bishop(props) {
     for (let j = col + 1; j != 9; j++) {
         const newRow = row + (col - j);
 
-        if (newRow > 1)
+        if (newRow >= 1)
             validMoves.push(`${newRow}_${j}`)
     }
 
