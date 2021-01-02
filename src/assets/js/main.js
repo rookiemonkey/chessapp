@@ -41,6 +41,10 @@ const ChessApp = function () {
                 : state.MOVEMENTS[cell_id] = 1
         }
 
+        static getCurrentPlayer() {
+            return state.CURRENT_PLAYER;
+        }
+
         static start() {
             state.START = true;
 
@@ -160,3 +164,5 @@ const ChessApp = function () {
 
 
 ChessApp.start();
+
+export default ChessApp;
