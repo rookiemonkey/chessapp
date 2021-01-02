@@ -79,7 +79,7 @@ const ChessApp = function () {
                             state.SELECTED_PLAYER = el.getAttribute('player');
                             state.SELECTED_PIECE = el.getAttribute('piece');
                             state.SELECTED_VALIDMOVES = getValidMoves(state);
-
+                            console.log(state)
                             showValidMoves(state, 'ACTIVATE')
                             return null;
                         }

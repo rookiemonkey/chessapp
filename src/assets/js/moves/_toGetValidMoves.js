@@ -2,6 +2,7 @@ import move_pawn from './pawn';
 import move_rook from './rook';
 import move_knight from './knight';
 import move_bishop from './bishop';
+import move_king from './king';
 
 export default function getValidMoves(state) {
     const { SELECTED_PIECE, SELECTED_COOR, MOVEMENTS,
@@ -35,6 +36,12 @@ export default function getValidMoves(state) {
         // BISHOP generate valid moves
         case 'BI':
             validMoves.push(...move_bishop({ rowFrom, colFrom }))
+            break;
+
+
+        // KING generate valid moves
+        case 'KI':
+            validMoves.push(...move_king({ rowFrom, colFrom }))
             break;
     }
 

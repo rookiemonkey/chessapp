@@ -46,15 +46,20 @@ export default function isMoveValid(state, coorFrom, coorTo) {
         // KNIGHT check if the move is valid
         case 'KN':
 
-            return SELECTED_VALIDMOVES.some(coor => coorTo == coor);
+            return SELECTED_VALIDMOVES.some(validCoor => coorTo == validCoor);
 
 
 
         // BISHOP check if the move is valid
         case 'BI':
 
-            return SELECTED_VALIDMOVES.some(coor => coorTo == coor);
+            return SELECTED_VALIDMOVES.some(validCoor => coorTo == validCoor);
 
+
+
+        // KING check if the move is valid
+        case 'KI':
+            return SELECTED_VALIDMOVES.some(validCoor => coorTo == validCoor)
     }
 
 }
