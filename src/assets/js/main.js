@@ -16,8 +16,14 @@ const ChessApp = function () {
         SELECTED_PIECE: '',
         SELECTED_VALIDMOVES: [],
         MOVEMENTS: new Object(),
-        BLK: { KI: 1, QU: 1, RO: 2, BI: 2, KN: 2, PA: 8 },
-        WHI: { KI: 1, QU: 1, RO: 2, BI: 2, KN: 2, PA: 8 },
+        BLK: {
+            pieces: { KI: 1, QU: 1, RO: 2, BI: 2, KN: 2, PA: 8 },
+            attacked: { KI: 0, QU: 0, RO: 0, BI: 0, KN: 0, PA: 0 }
+        },
+        WHI: {
+            pieces: { KI: 1, QU: 1, RO: 2, BI: 2, KN: 2, PA: 8 },
+            attacked: { KI: 0, QU: 0, RO: 0, BI: 0, KN: 0, PA: 0 }
+        },
         BOARD: {
             ROW1: ['RO-BLK', 'KN-BLK', 'BI-BLK', 'QU-BLK', 'KI-BLK', 'BI-BLK', 'KN-BLK', 'RO-BLK'],
             ROW2: ['PA-BLK', 'PA-BLK', 'PA-BLK', 'PA-BLK', 'PA-BLK', 'PA-BLK', 'PA-BLK', 'PA-BLK'],
@@ -124,6 +130,14 @@ const ChessApp = function () {
             // halt the function if move is invalid
             if (!isValidMove)
                 return alert("NOT A VALID MOVE")
+
+            // check if the the target coor has a chess piece
+            if (to.id) {
+                const otherPlayer = to.getAttribute('player');
+                const hisChessPiece = to.getAttribute('piece');
+                state[otherPlayer].pieces[hisChessPiece] -= 1;
+                state[state.CURRENT_PLAYER].attacked[hisChessPiece] += 1;
+            }
 
             // transfer all to 'to'
             to.classList.remove(SELECTED_PLAYER == 'BLK' ? 'WHI' : 'BLK')
