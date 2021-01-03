@@ -17,7 +17,16 @@ body {
     background-color: black;
 }
 
-h4#who_is_playing {
+div#top-container {
+    display: flex;
+    margin: 0px auto;
+    justify-content: space-between;
+    width: 760px; /*sum of the widhts main, #BLK-attacked, #WHI-attacked */
+}
+
+h4#who_is_playing,
+h4#time_BLK,
+h4#time_WHI {
     font-size: 1.5rem;
     text-align: center;
     color: white;

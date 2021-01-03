@@ -4,6 +4,7 @@ import getValidMoves from './moves/_toGetValidMoves';
 import move_pawn from './moves/pawn';
 import isMoveValid from './utilities/isMoveValid';
 import showValidMoves from './utilities/toShowValidMoves';
+import formatTimer from './utilities/toFormatTimer';
 
 const ChessApp = function () {
 
@@ -18,10 +19,14 @@ const ChessApp = function () {
         SELECTED_VALIDMOVES: [],
         MOVEMENTS: new Object(),
         BLK: {
+            time_id: null,
+            time_left: 7200, // 2 hours for standart intl chess competition
             pieces: { KI: 1, QU: 1, RO: 2, BI: 2, KN: 2, PA: 8 },
             attacked: { KI: 0, QU: 0, RO: 0, BI: 0, KN: 0, PA: 0 }
         },
         WHI: {
+            time_id: null,
+            time_left: 7200, // 2 hours for standart intl chess competition
             pieces: { KI: 1, QU: 1, RO: 2, BI: 2, KN: 2, PA: 8 },
             attacked: { KI: 0, QU: 0, RO: 0, BI: 0, KN: 0, PA: 0 }
         },
@@ -48,12 +53,31 @@ const ChessApp = function () {
                 : state.MOVEMENTS[cell_id] = 1
         }
 
+        static timer(action) {
+            const { CURRENT_PLAYER } = state;
+
+            if (action == 'start') {
+                state[CURRENT_PLAYER].time_id = setInterval(() => {
+
+                    const timerDisplay = document.querySelector(`#time_${CURRENT_PLAYER}`);
+                    state[CURRENT_PLAYER].time_left -= 1;
+                    timerDisplay.textContent = formatTimer(state[CURRENT_PLAYER].time_left)
+                }, 1000);
+            }
+
+            if (action == 'stop') {
+                clearInterval(state[CURRENT_PLAYER].time_id)
+            }
+
+        }
+
         static getCurrentPlayer() {
             return state.CURRENT_PLAYER;
         }
 
         static start() {
             state.START = true;
+            this.timer('start');
 
             [...document.querySelectorAll("[data-row]")].forEach(row => {
                 state.BOARD[`ROW${row.dataset.row}`].forEach((rowVal, ind) => {
@@ -197,7 +221,8 @@ const ChessApp = function () {
             BOARD[`ROW${rowFrom}`][colFrom - 1] = null;
             BOARD[`ROW${rowTo}`][colTo - 1] = `${SELECTED_PIECE}-${SELECTED_PLAYER}`;
 
-            // reset the state
+            // reset the state and stop the timer
+            this.timer('stop');
             showValidMoves(state, 'DEACTIVATE')
             state.SELECTED_CELLID = '';
             state.SELECTED_COOR = '';
@@ -208,6 +233,7 @@ const ChessApp = function () {
 
             document.querySelector('.selected').classList.remove('selected');
             document.querySelector('#who_is_playing').textContent = `${state.CURRENT_PLAYER}'s turn`
+            this.timer('start');
             console.log(state)
         }
 
