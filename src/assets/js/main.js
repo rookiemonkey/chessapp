@@ -77,7 +77,6 @@ const ChessApp = function () {
         }
 
         static cellOnClick(cell) {
-            console.log(cell)
             const target_coor = cell.getAttribute('data-coor');
 
             // initial select of a cell to move && prevent current 

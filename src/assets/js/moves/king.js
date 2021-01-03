@@ -21,7 +21,6 @@ export default function move_king(props) {
 
     moves.forEach(move => {
         const [x, y] = move.split('_');
-        console.log({ x, y })
         if ((x > 0 && x <= 8) && (y > 0 && y <= 8))
             validMoves.push(move)
     })
