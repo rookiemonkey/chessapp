@@ -138,7 +138,7 @@ const ChessApp = function () {
                 const hisChessPiece = to.getAttribute('piece');
                 state[otherPlayer].pieces[hisChessPiece] -= 1;
                 state[state.CURRENT_PLAYER].attacked[hisChessPiece] += 1;
-                this.cellOnGraveyard(to.getAttribute('player'));
+                this.cellOnCaputure(to.getAttribute('player'));
             }
 
             // transfer all to 'to'
@@ -175,10 +175,10 @@ const ChessApp = function () {
             console.log(state)
         }
 
-        static cellOnGraveyard(targetPlayer) {
-            const graveyard = document.querySelector(`#${state.CURRENT_PLAYER}-attacked`);
+        static cellOnCaputure(targetPlayer) {
+            const captures = document.querySelector(`#${state.CURRENT_PLAYER}-attacked`);
             const attacked = state[state.CURRENT_PLAYER].attacked;
-            graveyard.innerHTML = ``;
+            captures.innerHTML = ``;
 
             for (let piece in attacked) {
 
@@ -186,7 +186,7 @@ const ChessApp = function () {
                     for (let i = 1; i <= attacked[piece]; i++) {
                         const piece_img = document.createElement('img');
                         piece_img.src = require(`../images/${piece}-${targetPlayer}.svg`).default;
-                        graveyard.appendChild(piece_img);
+                        captures.appendChild(piece_img);
                     }
                 }
 
