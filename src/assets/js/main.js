@@ -71,52 +71,54 @@ const ChessApp = function () {
                         row.append(cell.container);
                     }
 
-                    cell.container.onclick = event => {
-                        const el = event.target;
-                        const target_coor = el.getAttribute('data-coor');
-
-                        // initial select of a cell to move && prevent current 
-                        // player to select other player's pieces
-                        if (!state.SELECTED_COOR
-                            && !state.SELECTED_CELLID
-                            && (el.getAttribute('player') == state.CURRENT_PLAYER)) {
-                            const cols = [...document.querySelectorAll('.col')];
-                            cols.forEach(col => col.classList.remove('selected'))
-
-                            el.classList.add('selected')
-                            state.SELECTED_COOR = target_coor;
-                            state.SELECTED_CELLID = el.getAttribute('id');
-                            state.SELECTED_PLAYER = el.getAttribute('player');
-                            state.SELECTED_PIECE = el.getAttribute('piece');
-                            state.SELECTED_VALIDMOVES = getValidMoves(state);
-                            console.log(state)
-                            showValidMoves(state, 'ACTIVATE')
-                            return null;
-                        }
-
-                        // disable select, when selected the same cell
-                        if (target_coor == state.SELECTED_COOR) {
-
-                            document.querySelector('.selected')
-                                .classList.remove('selected')
-
-                            showValidMoves(state, 'DEACTIVATE')
-                            state.SELECTED_CELLID = '';
-                            state.SELECTED_COOR = '';
-                            state.SELECTED_PLAYER = '';
-                            state.SELECTED_PIECE = '';
-                            state.SELECTED_VALIDMOVES = [];
-                            return null;
-                        }
-
-                        // proceed in moving
-                        this.move(state.SELECTED_COOR, target_coor);
-                    }
+                    cell.container.onclick = () => this.cellOnClick(cell.container)
                 })
             })
         }
 
-        static move(coorFrom, coorTo) {
+        static cellOnClick(cell) {
+            console.log(cell)
+            const target_coor = cell.getAttribute('data-coor');
+
+            // initial select of a cell to move && prevent current 
+            // player to select other player's pieces
+            if (!state.SELECTED_COOR
+                && !state.SELECTED_CELLID
+                && (cell.getAttribute('player') == state.CURRENT_PLAYER)) {
+                const cols = [...document.querySelectorAll('.col')];
+                cols.forEach(col => col.classList.remove('selected'))
+
+                cell.classList.add('selected')
+                state.SELECTED_COOR = target_coor;
+                state.SELECTED_CELLID = cell.getAttribute('id');
+                state.SELECTED_PLAYER = cell.getAttribute('player');
+                state.SELECTED_PIECE = cell.getAttribute('piece');
+                state.SELECTED_VALIDMOVES = getValidMoves(state);
+                console.log(state)
+                showValidMoves(state, 'ACTIVATE')
+                return null;
+            }
+
+            // disable select, when selected the same cell
+            if (target_coor == state.SELECTED_COOR) {
+
+                document.querySelector('.selected')
+                    .classList.remove('selected')
+
+                showValidMoves(state, 'DEACTIVATE')
+                state.SELECTED_CELLID = '';
+                state.SELECTED_COOR = '';
+                state.SELECTED_PLAYER = '';
+                state.SELECTED_PIECE = '';
+                state.SELECTED_VALIDMOVES = [];
+                return null;
+            }
+
+            // proceed in moving
+            this.cellOnMove(state.SELECTED_COOR, target_coor);
+        }
+
+        static cellOnMove(coorFrom, coorTo) {
             if (!state.SELECTED_COOR && !state.SELECTED_CELLID)
                 return alert("NOTHING TO MOVE");
 
@@ -145,14 +147,14 @@ const ChessApp = function () {
             to.setAttribute('player', SELECTED_PLAYER);
             to.setAttribute('piece', SELECTED_PIECE);
             to.setAttribute('id', SELECTED_CELLID);
-            to.textContent = from.textContent;
+            to.innerHTML = from.innerHTML;
 
             // remove all attributes, props, text content, BLK/WHI class from 'from'
             from.classList.remove(from.getAttribute('player'));
             from.removeAttribute('player');
             from.removeAttribute('piece');
             from.removeAttribute('id');
-            from.textContent = '';
+            from.innerHTML = '';
 
             // update the state board and increment move number
             this.incrementMove(state.SELECTED_CELLID)

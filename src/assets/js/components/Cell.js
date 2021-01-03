@@ -9,7 +9,10 @@ export default function HTMLChessPieceCell(row, col, player, piece) {
     this.container.setAttribute('player', player);
     this.container.setAttribute('piece', piece);
     this.container.setAttribute('id', `${piece}_${player}_${Math.random().toString().substr(2, 20)}`);
-    this.container.textContent = piece;
+
+    this.container.innerHTML = `
+        <img src="${require(`../../images/${piece}-${player}.svg`).default}" />
+    `;
 
     shouldDarken(row, col)
         ? this.container.classList.add('dark')
