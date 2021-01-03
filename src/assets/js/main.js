@@ -119,7 +119,7 @@ const ChessApp = function () {
 
         static cellOnMove(coorFrom, coorTo) {
             if (!state.SELECTED_COOR && !state.SELECTED_CELLID)
-                return alert("NOTHING TO MOVE");
+                return alert("NOT A VALID MOVE");
 
             const { BOARD, SELECTED_PIECE, SELECTED_PLAYER, SELECTED_CELLID } = state;
             const from = document.querySelector(`[data-coor='${coorFrom}']`);
@@ -138,6 +138,7 @@ const ChessApp = function () {
                 const hisChessPiece = to.getAttribute('piece');
                 state[otherPlayer].pieces[hisChessPiece] -= 1;
                 state[state.CURRENT_PLAYER].attacked[hisChessPiece] += 1;
+                this.cellOnGraveyard(to.getAttribute('player'));
             }
 
             // transfer all to 'to'
@@ -172,6 +173,25 @@ const ChessApp = function () {
             document.querySelector('.selected').classList.remove('selected');
             document.querySelector('#who_is_playing').textContent = `${state.CURRENT_PLAYER}'s turn`
             console.log(state)
+        }
+
+        static cellOnGraveyard(targetPlayer) {
+            const graveyard = document.querySelector(`#${state.CURRENT_PLAYER}-attacked`);
+            const attacked = state[state.CURRENT_PLAYER].attacked;
+            graveyard.innerHTML = ``;
+
+            for (let piece in attacked) {
+
+                if (attacked[piece]) {
+                    for (let i = 1; i <= attacked[piece]; i++) {
+                        const piece_img = document.createElement('img');
+                        piece_img.src = require(`../images/${piece}-${targetPlayer}.svg`).default;
+                        graveyard.appendChild(piece_img);
+                    }
+                }
+
+            }
+
         }
     }
 

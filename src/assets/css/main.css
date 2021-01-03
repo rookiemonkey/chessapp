@@ -13,9 +13,50 @@
     box-sizing: border-box;
 }
 
+body {
+    background-color: black;
+}
+
+h4#who_is_playing {
+    font-size: 1.5rem;
+    text-align: center;
+    color: white;
+    margin: 10px 0px;
+}
+
+div#main-container {
+    display: flex;
+    justify-content: center;
+    margin: 0px auto;
+}
+
+div#BLK-attacked,
+div#WHI-attacked {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100px;
+    height: auto;
+    background-color: rgb(77, 77, 77);
+}
+
+div#BLK-attacked {
+    align-content: flex-start;
+}
+
+div#WHI-attacked {
+    align-content: flex-end;
+}
+
+div#BLK-attacked > img,
+div#WHI-attacked > img {
+    width: 45px;
+    height: 45px;
+}
+
 main {
     border: 1px solid black;
-    margin: 0px auto;
     width: var(--board_w);
     height: var(--board_w);
 }
