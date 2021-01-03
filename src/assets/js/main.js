@@ -1,6 +1,7 @@
 import HTMLChessPieceCell from './components/Cell';
 import HTMLChessPieceCellEmpty from './components/CellEmpty';
 import getValidMoves from './moves/_toGetValidMoves';
+import move_pawn from './moves/pawn';
 import isMoveValid from './utilities/isMoveValid';
 import showValidMoves from './utilities/toShowValidMoves';
 
@@ -132,13 +133,48 @@ const ChessApp = function () {
             if (!isValidMove)
                 return alert("NOT A VALID MOVE")
 
-            // check if the the target coor has a chess piece
+            // check if the target coor has a chess piece
             if (to.id) {
                 const otherPlayer = to.getAttribute('player');
                 const hisChessPiece = to.getAttribute('piece');
                 state[otherPlayer].pieces[hisChessPiece] -= 1;
                 state[state.CURRENT_PLAYER].attacked[hisChessPiece] += 1;
                 this.cellOnCaputure(to.getAttribute('player'));
+            }
+
+            // check if the target pawn with valid Enpassant move
+            if (from.getAttribute('piece') == 'PA') {
+                const { validEnpassants } = move_pawn({ ...state, rowFrom, colFrom })
+                const rightEnpassant = `${rowFrom}_${parseInt(colFrom) + 1}`;
+                const leftEnpassant = `${rowFrom}_${parseInt(colFrom) - 1}`;
+                let target;
+
+                const isValidLeftenpassant = validEnpassants
+                    .some(enpCoor => enpCoor == leftEnpassant)
+
+                const isValidRightenpassant = validEnpassants
+                    .some(enpCoor => enpCoor == rightEnpassant)
+
+                if (isValidLeftenpassant)
+                    target = document.querySelector(`[data-coor='${leftEnpassant}']`);
+
+                if (isValidRightenpassant)
+                    target = document.querySelector(`[data-coor='${rightEnpassant}']`);
+
+                if (target) {
+                    const [row, col] = target.getAttribute('data-coor').split('_');
+                    const otherPlayer = target.getAttribute('player');
+                    const hisChessPiece = target.getAttribute('piece');
+                    state[otherPlayer].pieces[hisChessPiece] -= 1;
+                    state[state.CURRENT_PLAYER].attacked[hisChessPiece] += 1;
+                    this.cellOnCaputure(target.getAttribute('player'));
+                    target.classList.remove(from.getAttribute('player'));
+                    target.removeAttribute('player');
+                    target.removeAttribute('piece');
+                    target.removeAttribute('id');
+                    target.innerHTML = ``;
+                    BOARD[`ROW${row}`][col - 1] = null;
+                }
             }
 
             // transfer all to 'to'

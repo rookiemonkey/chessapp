@@ -15,10 +15,11 @@ export default function getValidMoves(state) {
 
         // PAWN generate valid moves
         case 'PA':
-            validMoves.push(...move_pawn({
+            const { validMovesPawn } = move_pawn({
                 MOVEMENTS, SELECTED_CELLID,
                 SELECTED_PLAYER, rowFrom, colFrom
-            }))
+            });
+            validMoves.push(...validMovesPawn)
             break;
 
 
