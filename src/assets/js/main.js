@@ -1,5 +1,6 @@
 import HTMLChessPieceCell from './components/Cell';
 import HTMLChessPieceCellEmpty from './components/CellEmpty';
+import HTMLToaster from './components/Toast';
 import getValidMoves from './moves/_toGetValidMoves';
 import move_pawn from './moves/pawn';
 import isMoveValid from './utilities/isMoveValid';
@@ -7,6 +8,7 @@ import showValidMoves from './utilities/toShowValidMoves';
 import formatTimer from './utilities/toFormatTimer';
 
 const ChessApp = function () {
+    const toaster = new HTMLToaster();
 
     // GAME PRIVATE STATE
     const state = {
@@ -78,6 +80,7 @@ const ChessApp = function () {
         static start() {
             state.START = true;
             this.timer('start');
+            toaster.initialize();
 
             [...document.querySelectorAll("[data-row]")].forEach(row => {
                 state.BOARD[`ROW${row.dataset.row}`].forEach((rowVal, ind) => {
@@ -144,7 +147,7 @@ const ChessApp = function () {
 
         static cellOnMove(coorFrom, coorTo) {
             if (!state.SELECTED_COOR && !state.SELECTED_CELLID)
-                return alert("NOT A VALID MOVE");
+                return toaster.showMessage('Not a valid move', 'error');
 
             const { BOARD, SELECTED_PIECE, SELECTED_PLAYER, SELECTED_CELLID } = state;
             const from = document.querySelector(`[data-coor='${coorFrom}']`);
@@ -155,7 +158,7 @@ const ChessApp = function () {
 
             // halt the function if move is invalid
             if (!isValidMove)
-                return alert("NOT A VALID MOVE")
+                return toaster.showMessage('Not a valid move', 'error');
 
             // check if the target coor has a chess piece
             if (to.id) {

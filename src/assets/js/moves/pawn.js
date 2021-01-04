@@ -16,6 +16,9 @@ export default function move_pawn(props) {
                 const forward = `[data-coor='${row + i}_${col}']`;
                 const cellForward = document.querySelector(forward);
 
+                if (cellForward && cellForward.id)
+                    break;
+
                 if (cellForward && !cellForward.id)
                     validMovesPawn.push(`${row + i}_${col}`)
 
@@ -67,6 +70,9 @@ export default function move_pawn(props) {
             for (let i = 1; i <= numForward; i++) {
                 const forward = `[data-coor='${row - i}_${col}']`;
                 const cellForward = document.querySelector(forward);
+
+                if (cellForward && cellForward.id)
+                    break;
 
                 if (cellForward && !cellForward.id)
                     validMovesPawn.push(`${row - i}_${col}`)
