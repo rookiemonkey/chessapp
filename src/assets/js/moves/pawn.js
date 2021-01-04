@@ -16,7 +16,24 @@ export default function move_pawn(props) {
                 const forward = `[data-coor='${row + i}_${col}']`;
                 const cellForward = document.querySelector(forward);
 
-                if (cellForward && !cellForward.id)
+                if (cellForward && numForward == 2) {
+
+                    if (i == 1 && !cellForward.id) {
+                        validMovesPawn.push(`${row + i}_${col}`)
+                    }
+
+                    if (i == 2) {
+                        const oneForward = `[data-coor='${row + 1}_${col}']`;
+                        const cellOneForward = document.querySelector(oneForward);
+
+                        if (!cellOneForward.id) {
+                            validMovesPawn.push(`${row + i}_${col}`)
+                        }
+                    }
+
+                }
+
+                if (cellForward && !cellForward.id && numForward == 1)
                     validMovesPawn.push(`${row + i}_${col}`)
 
                 // left/right attack with en passant
@@ -70,7 +87,24 @@ export default function move_pawn(props) {
                 const forward = `[data-coor='${row - i}_${col}']`;
                 const cellForward = document.querySelector(forward);
 
-                if (cellForward && !cellForward.id)
+                if (cellForward && numForward == 2) {
+
+                    if (i == 1 && !cellForward.id) {
+                        validMovesPawn.push(`${row - i}_${col}`)
+                    }
+
+                    if (i == 2) {
+                        const oneForward = `[data-coor='${row - 1}_${col}']`;
+                        const cellOneForward = document.querySelector(oneForward);
+
+                        if (!cellOneForward.id) {
+                            validMovesPawn.push(`${row - i}_${col}`)
+                        }
+                    }
+
+                }
+
+                if (cellForward && !cellForward.id && numForward == 1)
                     validMovesPawn.push(`${row - i}_${col}`)
 
                 // left/right attack with en passant
