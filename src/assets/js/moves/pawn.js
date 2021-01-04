@@ -16,9 +16,6 @@ export default function move_pawn(props) {
                 const forward = `[data-coor='${row + i}_${col}']`;
                 const cellForward = document.querySelector(forward);
 
-                if (cellForward && cellForward.id)
-                    break;
-
                 if (cellForward && !cellForward.id)
                     validMovesPawn.push(`${row + i}_${col}`)
 
@@ -36,6 +33,7 @@ export default function move_pawn(props) {
                     // check if these possible enpassants moves have moved once already
                     // get the cell below the target piece
                     if (cellEnpassantLeft
+                        && cellEnpassantLeft.getAttribute('player') != SELECTED_PLAYER
                         && MOVEMENTS[cellEnpassantLeft.getAttribute('id')] == 1) {
                         const coor = cellEnpassantLeft.getAttribute('data-coor')
                         const [x, y] = coor.split('_');
@@ -44,6 +42,7 @@ export default function move_pawn(props) {
                     }
 
                     if (cellEnpassantRight
+                        && cellEnpassantRight.getAttribute('player') != SELECTED_PLAYER
                         && MOVEMENTS[cellEnpassantRight.getAttribute('id')] == 1) {
                         const coor = cellEnpassantRight.getAttribute('data-coor')
                         const [x, y] = coor.split('_');
@@ -71,9 +70,6 @@ export default function move_pawn(props) {
                 const forward = `[data-coor='${row - i}_${col}']`;
                 const cellForward = document.querySelector(forward);
 
-                if (cellForward && cellForward.id)
-                    break;
-
                 if (cellForward && !cellForward.id)
                     validMovesPawn.push(`${row - i}_${col}`)
 
@@ -91,6 +87,7 @@ export default function move_pawn(props) {
                     // check if these possible enpassants moves have moved once already
                     // get the cell above the target piece
                     if (cellEnpassantLeft
+                        && cellEnpassantLeft.getAttribute('player') != SELECTED_PLAYER
                         && MOVEMENTS[cellEnpassantLeft.getAttribute('id')] == 1) {
                         const coor = cellEnpassantLeft.getAttribute('data-coor')
                         const [x, y] = coor.split('_');
@@ -99,6 +96,7 @@ export default function move_pawn(props) {
                     }
 
                     if (cellEnpassantRight
+                        && cellEnpassantRight.getAttribute('player') != SELECTED_PLAYER
                         && MOVEMENTS[cellEnpassantRight.getAttribute('id')] == 1) {
                         const coor = cellEnpassantRight.getAttribute('data-coor')
                         const [x, y] = coor.split('_');
