@@ -2,9 +2,9 @@
 
 The idea of this application is basically emulate the logic of chess using HTML/CSS/Javascript. This is done solely for me to practice the said technologies. Also I'm planning to have this converted into a multiplayer game, where in once loaded, websocket enabled server will look for an available opponent.
 
-### TO DO LIST (OPEN FOR CONTRIBUTIONS)
-- timer for each player
-- websocket for online multiplayer
+Consider checking the repo's issues, all of my todos are in there :smile:
+
+![Screenshot](./chessapp.png)
 
 ## Author: <i>Kevin Roi R. Basina</i>
 <a href="https://github.com/rookiemonkey">
