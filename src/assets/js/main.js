@@ -122,7 +122,6 @@ const ChessApp = function () {
                 state.SELECTED_PLAYER = cell.getAttribute('player');
                 state.SELECTED_PIECE = cell.getAttribute('piece');
                 state.SELECTED_VALIDMOVES = getValidMoves(state);
-                console.log(state)
                 showValidMoves(state, 'ACTIVATE')
                 return null;
             }
@@ -205,9 +204,10 @@ const ChessApp = function () {
             state.CURRENT_PLAYER = state.CURRENT_PLAYER == 'WHI' ? 'BLK' : 'WHI';
 
             document.querySelector('.selected').classList.remove('selected');
-            document.querySelector('#who_is_playing').textContent = `${state.CURRENT_PLAYER}'s turn`
+            document.querySelector('#who_is_playing').textContent = state.CURRENT_PLAYER == 'WHI'
+                ? 'White is playing'
+                : 'Black is playing'
             this.timer('start');
-            console.log(state)
         }
 
         static cellOnCaputure(targetPlayer) {
